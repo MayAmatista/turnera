@@ -1,52 +1,113 @@
 import React, { useState } from "react";
-import { Button, Collapse, IconButton, List, ListItem, ListItemText, Typography } from "@mui/material";
-import servicesData from "../api/services.json";
+import {
+  Button,
+  Card,
+  CardContent,
+  Collapse,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import servicesData from "../api/services.json";
+import CategoryOption from "./CategoryOption";
+import { Link } from "react-router-dom";
+import { Service } from "../interfaces/Service";
 
 const CategoryOptions: React.FC = () => {
-    const services = servicesData.services;
-    const [expandedService, setExpandedService] = useState<number | null>(null);
+  const services: Service[] = servicesData.services;
+  const categories: string[] = Array.from(
+    new Set(services.map((service) => service.category))
+  );
 
-  const handleExpand = (id: number) => {
-    if (expandedService === id) {
-      setExpandedService(null); 
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [selectedServices, setSelectedServices] = useState<number[]>([]);
+
+  const handleCategoryExpand = (category: string) => {
+    setExpandedCategory((prevState) =>
+      prevState === category ? null : category
+    );
+  };
+
+  const handleServiceSelect = (id: number) => {
+    const index = selectedServices.indexOf(id);
+    if (index === -1) {
+      setSelectedServices([...selectedServices, id]);
     } else {
-      setExpandedService(id);
+      setSelectedServices(
+        selectedServices.filter((serviceId) => serviceId !== id)
+      );
     }
   };
 
+  const isServiceSelected = (id: number) => selectedServices.includes(id);
+
   return (
-    <div>
-      <List>
-        {services.map((service) => (
-          <React.Fragment key={service.id}>
-            <ListItem button onClick={() => handleExpand(service.id)}>
-              <ListItemText primary={service.name} />
+    <div style={{ maxWidth: "100%", width: "80%", margin: "0 auto" }}>
+      <div style={{ marginBottom: "20px" }}>
+        <Typography variant="h6">Servicios seleccionados:</Typography>
+        <div>
+          {selectedServices.map((serviceId) => {
+            const service = services.find((s) => s.id === serviceId);
+            return (
+              <div
+                key={serviceId}
+                style={{ display: "inline-block", marginRight: "10px" }}
+              >
+                <Typography variant="body2">{service?.name}</Typography>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {categories.map((category) => (
+        <Card
+          key={category}
+          style={{ marginBottom: "10px" }}
+          variant="elevation"
+        >
+          <CardContent>
+            <ListItem
+              onClick={() => handleCategoryExpand(category)}
+              style={{ backgroundColor: "#e0e0e0" }}
+            >
+              <ListItemText primary={category} />
               <IconButton>
-                {expandedService === service.id ? (
-                  <RemoveIcon />
-                ) : (
-                  <AddIcon />
-                )}
+                {expandedCategory === category ? <RemoveIcon /> : <AddIcon />}
               </IconButton>
             </ListItem>
             <Collapse
-              in={expandedService === service.id}
+              in={expandedCategory === category}
               timeout="auto"
               unmountOnExit
             >
-              <Typography variant="body2">{service.description}</Typography>
+              <List>
+                {services
+                  .filter((service) => service.category === category)
+                  .map((service) => (
+                    <CategoryOption
+                      key={service.id}
+                      service={service}
+                      isServiceSelected={isServiceSelected}
+                      handleSelect={handleServiceSelect}
+                    />
+                  ))}
+              </List>
             </Collapse>
-          </React.Fragment>
-        ))}
-      </List>
-      <Button variant="contained" color="primary">
-        Reservar
-      </Button>
-      <Button variant="text" color="primary">
-        Mis turnos
-      </Button>
+          </CardContent>
+        </Card>
+      ))}
+      {selectedServices.length > 0 && (
+        <Link to="/select-schedule">
+          <Button variant="contained" color="primary">
+            Siguiente
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import CategoryOptions from "./CategoryOptions";
 
 const CategoryCard: React.FC = () => {
   return (
-    <Card>
+    <Card variant="outlined">
       <CardContent>
         <Typography variant="h5">Categorias</Typography>
         <CategoryOptions></CategoryOptions>
