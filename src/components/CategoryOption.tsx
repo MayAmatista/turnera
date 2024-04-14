@@ -1,7 +1,14 @@
 import React from "react";
-import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
-import { CategoryOptionProps } from "../interfaces/CategoryOptionProps";
+import { ListItem, ListItemText, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { Service } from "../interfaces/Service";
 
+interface CategoryOptionProps {
+  service: Service;
+  isServiceSelected: (service: Service) => boolean;
+  handleSelect: (service: Service) => void;
+}
 
 const CategoryOption: React.FC<CategoryOptionProps> = ({
   service,
@@ -9,24 +16,17 @@ const CategoryOption: React.FC<CategoryOptionProps> = ({
   handleSelect,
 }) => {
   return (
-    <Card style={{ marginBottom: "10px" }} variant="outlined">
-      <CardContent>
-        <Typography variant="h6">{service.name}</Typography>
-        <Typography variant="body2" style={{ marginBottom: "8px" }}>
-          {service.description}
-        </Typography>
-        <Grid container justifyContent="flex-end">
-          <Button
-            variant={isServiceSelected(service.id) ? "contained" : "outlined"}
-            color="primary"
-            onClick={() => handleSelect(service.id)}
-            style={{ marginLeft: "auto" }}
-          >
-            {isServiceSelected(service.id) ? "Seleccionado" : "Seleccionar"}
-          </Button>
-        </Grid>
-      </CardContent>
-    </Card>
+    <ListItem
+      onClick={() => handleSelect(service)}
+      style={{
+        backgroundColor: isServiceSelected(service) ? "lightgrey" : "white",
+      }}
+    >
+      <ListItemText primary={service.name} />
+      <IconButton>
+        {isServiceSelected(service) ? <RemoveIcon /> : <AddIcon />}
+      </IconButton>
+    </ListItem>
   );
 };
 

@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   Collapse,
-  Grid,
   IconButton,
   List,
   ListItem,
@@ -17,15 +16,17 @@ import servicesData from "../api/services.json";
 import CategoryOption from "./CategoryOption";
 import { Link } from "react-router-dom";
 import { Service } from "../interfaces/Service";
+import { useAppState } from "../AppStateContext";
 
 const CategoryOptions: React.FC = () => {
+  const { selectedServices, setSelectedServices } = useAppState();
+
   const services: Service[] = servicesData.services;
   const categories: string[] = Array.from(
     new Set(services.map((service) => service.category))
   );
 
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
-  const [selectedServices, setSelectedServices] = useState<number[]>([]);
 
   const handleCategoryExpand = (category: string) => {
     setExpandedCategory((prevState) =>
@@ -33,35 +34,36 @@ const CategoryOptions: React.FC = () => {
     );
   };
 
-  const handleServiceSelect = (id: number) => {
-    const index = selectedServices.indexOf(id);
+  const handleServiceSelect = (service: Service) => {
+    const index = selectedServices.findIndex(
+      (s: Service) => s.id === service.id
+    );
     if (index === -1) {
-      setSelectedServices([...selectedServices, id]);
+      setSelectedServices([...selectedServices, service]);
     } else {
       setSelectedServices(
-        selectedServices.filter((serviceId) => serviceId !== id)
+        selectedServices.filter((s: Service) => s.id !== service.id)
       );
     }
   };
 
-  const isServiceSelected = (id: number) => selectedServices.includes(id);
+  const isServiceSelected = (service: Service) => {
+    return selectedServices.some((s: Service) => s.id === service.id);
+  };
 
   return (
     <div style={{ maxWidth: "100%", width: "80%", margin: "0 auto" }}>
       <div style={{ marginBottom: "20px" }}>
         <Typography variant="h6">Servicios seleccionados:</Typography>
         <div>
-          {selectedServices.map((serviceId) => {
-            const service = services.find((s) => s.id === serviceId);
-            return (
-              <div
-                key={serviceId}
-                style={{ display: "inline-block", marginRight: "10px" }}
-              >
-                <Typography variant="body2">{service?.name}</Typography>
-              </div>
-            );
-          })}
+          {selectedServices.map((service: Service) => (
+            <div
+              key={service.id}
+              style={{ display: "inline-block", marginRight: "10px" }}
+            >
+              <Typography variant="body2">{service.name}</Typography>
+            </div>
+          ))}
         </div>
       </div>
       {categories.map((category) => (
@@ -87,10 +89,10 @@ const CategoryOptions: React.FC = () => {
             >
               <List>
                 {services
-                  .filter((service) => service.category === category)
-                  .map((service) => (
+                  .filter((service: Service) => service.category === category)
+                  .map((service, index) => (
                     <CategoryOption
-                      key={service.id}
+                      key={`${service.id}-${index}`}
                       service={service}
                       isServiceSelected={isServiceSelected}
                       handleSelect={handleServiceSelect}
