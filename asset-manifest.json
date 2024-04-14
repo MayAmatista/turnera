@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/planify/static/js/main.ac75b699.js",
+    "index.html": "/planify/index.html",
+    "main.ac75b699.js.map": "/planify/static/js/main.ac75b699.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.ac75b699.js"
+  ]
+}
