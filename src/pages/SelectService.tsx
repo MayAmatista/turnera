@@ -1,14 +1,23 @@
 import React from "react";
-import { Typography } from "@mui/material";
-import CategoryCard from "../components/CategoryCard";
+import { Card, CardContent, Typography } from "@mui/material";
+import CategoryOptions from "../components/CategoryOptions";
 
 const SelectService: React.FC = () => {
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        Seleccionar Servicio
-      </Typography>
-      <CategoryCard></CategoryCard>
+      <Card variant="outlined">
+        <CardContent>
+          <Typography
+            style={{
+              paddingLeft: "10%"
+            }}
+            variant="h5"
+          >
+            Categorias
+          </Typography>
+          <CategoryOptions></CategoryOptions>
+        </CardContent>
+      </Card>
     </div>
   );
 };

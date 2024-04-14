@@ -1,7 +1,11 @@
 import React from "react";
-import { ListItem, ListItemText, IconButton } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import {
+  ListItem,
+  ListItemText,
+  Button,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { Service } from "../interfaces/Service";
 
 interface CategoryOptionProps {
@@ -15,17 +19,43 @@ const CategoryOption: React.FC<CategoryOptionProps> = ({
   isServiceSelected,
   handleSelect,
 }) => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
     <ListItem
       onClick={() => handleSelect(service)}
       style={{
-        backgroundColor: isServiceSelected(service) ? "lightgrey" : "white",
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        alignItems: "center",
       }}
     >
-      <ListItemText primary={service.name} />
-      <IconButton>
-        {isServiceSelected(service) ? <RemoveIcon /> : <AddIcon />}
-      </IconButton>
+      <div style={{ flex: 1 }}>
+        <ListItemText
+          primary={
+            <Typography variant="h6" style={{ fontWeight: "bold" }}>
+              {service.name}
+            </Typography>
+          }
+          secondary={!isMobile && service.description}
+        />
+        {isMobile && (
+          <Typography variant="body1" paragraph>
+            {service.description}
+          </Typography>
+        )}
+      </div>
+      <Button
+        variant={isServiceSelected(service) ? "contained" : "outlined"}
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleSelect(service);
+        }}
+        style={{ marginLeft: "auto", marginTop: isMobile ? "8px" : "0" }}
+      >
+        {isServiceSelected(service) ? "Seleccionado" : "Seleccionar"}
+      </Button>
     </ListItem>
   );
 };
