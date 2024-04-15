@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+# Planify
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Planify es una aplicación desarrollada para ayudarte a planificar y organizar tus tareas de manera eficiente.
 
-## Available Scripts
+## Instalación
 
-In the project directory, you can run:
+Antes de comenzar, asegúrate de tener Node.js instalado en tu sistema. La versión utilizada para este proyecto es v16.13.0. Puedes descargar Node.js desde [aquí](https://nodejs.org/).
 
-### `npm start`
+Una vez que tienes Node.js instalado, sigue estos pasos para instalar y ejecutar la aplicación:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Clona este repositorio en tu máquina local:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+git clone https://github.com/MayAmatista/planify.git
+```
+2. Navega al root del proyecto e instale las depencias:
 
-### `npm test`
+  ```bash
+  npm install
+  ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Uso
 
-### `npm run build`
+Una vez instaladas las depencias, podrá levantar la aplicación en http://localhost:3000/ al ejecutar en la raiz del proyecto:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm run start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Para el desarrollo de este proyecto se utilizó:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+* React
+* Material UI
+* React router dom
