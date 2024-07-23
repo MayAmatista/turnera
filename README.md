@@ -1,6 +1,4 @@
-# Planify
-
-Planify es una aplicación desarrollada para ayudarte a planificar y organizar tus tareas de manera eficiente.
+Esta es una aplicación desarrollada para ayudarte a planificar y organizar tus tareas de manera eficiente.
 
 ## Instalación
 
@@ -11,7 +9,7 @@ Una vez que tienes Node.js instalado, sigue estos pasos para instalar y ejecutar
 1. Clona este repositorio en tu máquina local:
 
 ```bash
-git clone https://github.com/MayAmatista/planify.git
+git clone https://github.com/MayAmatista/turnera.git
 ```
 2. Navega al root del proyecto e instale las depencias:
 
